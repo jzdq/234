@@ -1,1 +1,40 @@
-<1> qaz<h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Translation Program</title>
+</head>
+<body>
+	<h1>Translation Program</h1>
+
+	<label for="text-input">Enter Text to Translate:</label><br>
+	<textarea id="text-input" rows="5" cols="50"></textarea><br>
+
+	<label for="language-select">Select Language:</label>
+	<select id="language-select">
+		<option value="en">English</option>
+		<option value="es">Spanish</option>
+		<option value="fr">French</option>
+		<option value="de">German</option>
+	</select><br>
+
+	<button onclick="translate()">Translate</button>
+
+	<p id="translated-text"></p>
+
+	<script>
+		function translate() {
+			const text = document.getElementById("text-input").value;
+			const language = document.getElementById("language-select").value;
+			const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${language}|en`;
+
+			fetch(url)
+				.then(response => response.json())
+				.then(data => {
+					const translation = data.responseData.translatedText;
+					document.getElementById("translated-text").innerHTML = translation;
+				})
+				.catch(error => console.log(error));
+		}
+	</script>
+</body>
+</html>

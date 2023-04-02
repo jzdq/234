@@ -1,40 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Translation Program</title>
+    <title>计算器</title>
+    <script>
+        function calculate() {
+            var operand1 = parseFloat(document.getElementById("operand1").value);
+            var operand2 = parseFloat(document.getElementById("operand2").value);
+            var operator = document.getElementById("operator").value;
+            
+            var result;
+            switch(operator) {
+                case "+":
+                    result = operand1 + operand2;
+                    break;
+                case "-":
+                    result = operand1 - operand2;
+                    break;
+                case "*":
+                    result = operand1 * operand2;
+                    break;
+                case "/":
+                    result = operand1 / operand2;
+                    break;
+            }
+            
+            document.getElementById("result").value = result;
+        }
+    </script>
 </head>
 <body>
-	<h1>Translation Program</h1>
-
-	<label for="text-input">Enter Text to Translate:</label><br>
-	<textarea id="text-input" rows="5" cols="50"></textarea><br>
-
-	<label for="language-select">Select Language:</label>
-	<select id="language-select">
-		<option value="en">English</option>
-		<option value="es">Spanish</option>
-		<option value="fr">French</option>
-		<option value="de">German</option>
-	</select><br>
-
-	<button onclick="translate()">Translate</button>
-
-	<p id="translated-text"></p>
-
-	<script>
-		function translate() {
-			const text = document.getElementById("text-input").value;
-			const language = document.getElementById("language-select").value;
-			const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${language}|en`;
-
-			fetch(url)
-				.then(response => response.json())
-				.then(data => {
-					const translation = data.responseData.translatedText;
-					document.getElementById("translated-text").innerHTML = translation;
-				})
-				.catch(error => console.log(error));
-		}
-	</script>
+    <h2>计算器</h2>
+    <div>
+        <label for="operand1">操作数1：</label>
+        <input type="number" id="operand1">
+    </div>
+    <div>
+        <label for="operand2">操作数2：</label>
+        <input type="number" id="operand2">
+    </div>
+    <div>
+        <label for="operator">运算符：</label>
+        <select id="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" onclick="calculate()">计算</button>
+    </div>
+    <div>
+        <label for="result">结果：</label>
+        <input type="number" id="result" readonly>
+    </div>
 </body>
 </html>
